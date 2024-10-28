@@ -76,7 +76,11 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Docker Buildx
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Login to registry
@@ -87,7 +91,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           cache-from: ${{ env.GHCR_REGISTRY_IMAGE }}:latest
           pull: true
